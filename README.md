@@ -53,4 +53,4 @@ Tools:
 
 backend:
 1) nextJs
-2) postgreSql
+2) postgreSql"# js-bomb-task" 
