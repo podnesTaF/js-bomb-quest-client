@@ -1,0 +1,75 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.level {
+    display: flex;
+    position: relative;
+    height: 120px;
+    /*align-items: center;*/
+}
+
+.available.level .circle {
+    background-color: green;
+}
+
+.available.level .connector {
+    border-color: green;
+}
+
+.level h3 {
+    font-size: 1.4rem;
+    margin: 15px;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.level:nth-child(even) {
+    flex-flow: row-reverse;
+}
+
+.connector {
+    border: 1px solid gray;
+    height: 180px;
+    position: absolute;
+    right: 120px;
+    top: 20px;
+    transform: rotate(50deg);
+}
+
+.connectorOdd {
+    border: 1px solid gray;
+    height: 220px;
+    position: absolute;
+    right: 90px;
+    top: -15px;
+    transform: rotate(-57deg);
+}
+
+.connectorLast {
+    border: 1px solid gray;
+    height: 240px;
+    position: absolute;
+    right: 130px;
+    top: -30px;
+    transform: rotate(60deg);
+}
+
+
+
+

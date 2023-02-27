@@ -1,7 +1,18 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonBreadcrumb,
+  IonBreadcrumbs,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonPage, IonText,
+  IonTitle,
+  IonToolbar
+} from '@ionic/react';
 import { useParams } from 'react-router';
-import ExploreContainer from '../components/ExploreContainer';
 import './Page.css';
+import React from "react";
+import Levels from "../components/Levels";
 
 const Page: React.FC = () => {
 
@@ -9,23 +20,17 @@ const Page: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>{name}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">{name}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name={name} />
-      </IonContent>
+      <div className='intro'>
+        <IonText color="primary">
+          <h1>Welcome to js - react master Questions</h1>
+        </IonText>
+        <p>
+          You can start from what you want, but to get the most form the test start with first module and so on
+        </p>
+      </div>
+      <div>
+        <Levels />
+      </div>
     </IonPage>
   );
 };
