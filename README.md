@@ -1,7 +1,5 @@
 js quest:
 
-make the bomb flash. just idea
-
 Idea:
 1) Create app with modules and questions, Hints, errors, answers, progress etc.
 2) Questions on four topics:
