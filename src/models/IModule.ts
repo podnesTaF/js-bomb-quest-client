@@ -5,6 +5,8 @@ export interface IModule {
     attributes: {
         name: string;
         isDone: boolean;
-        questions: IQuestion[];
+        questions: {
+            data: IQuestion[]
+        };
     }
 }

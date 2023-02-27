@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import styles from './QuestionItem.module.css'
@@ -8,6 +8,8 @@ import SingleAnswer from "../SingleAnswer";
 import MultipleAnswer from "../MultipleAnswer";
 import question from "../../pages/Question";
 import Order from "../Order";
+import {IAnswer} from "../../models/IAnswer";
+import OwnAnswer from "../OwnAnswer";
 
 
 interface QuestionItemProps {
@@ -18,11 +20,13 @@ interface QuestionItemProps {
     setActive: Function;
     maxLength: number;
     id: number;
+    setSelection: Function;
+    submitQuiz: Function;
 }
 
-const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setActive, snippet,type,title, id}) => {
+const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setActive, snippet,type,title, id, setSelection, submitQuiz}) => {
 
-    const [answers, setAnswers] = React.useState<any[]>([]);
+    const [answers, setAnswers] = useState<IAnswer[]>([]);
 
 
     useEffect(() => {
@@ -42,7 +46,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setA
         if(maxLength > activeSlide) {
             setActive((prevState: number) => prevState + 1);
         } else {
-            console.log('submit')
+            submitQuiz();
         }
     }
 
@@ -61,9 +65,10 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setA
                     {snippet}
                 </SyntaxHighlighter>}
                 <div className={styles.answers}>
-                    {type === 'single' && <SingleAnswer answers={answers} />}
-                    {type === 'multiple' && <MultipleAnswer answers={answers} />}
-                    {type === 'order' && <Order answers={answers} />}
+                    {type === 'single' && answers.length === 1 && <OwnAnswer setSelection={setSelection} questionId={id} />}
+                    {type === 'single' && answers.length !== 1 && <SingleAnswer questionId={id} setSelection={setSelection} answers={answers} />}
+                    {type === 'multiple' && <MultipleAnswer questionId={id} setSelection={setSelection} answers={answers} />}
+                    {type === 'order' && <Order questionId={id} setSelection={setSelection} answers={answers} />}
                 </div>
                 <div className={styles.actions}>
                     <IonButton disabled={activeSlide <= 1} onClick={prev} fill={'outline'}>Previous</IonButton>

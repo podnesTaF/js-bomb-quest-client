@@ -5,7 +5,9 @@ export type IQuestion = {
     attributes: {
         title: string;
         type: "multiple" | "single" | "dragable" | "order";
-        answers: IAnswer[];
+        answers: {
+            data: IAnswer[]
+        };
         hint: string;
         snippet: string | null;
     }
