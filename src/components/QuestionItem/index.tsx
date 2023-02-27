@@ -4,6 +4,10 @@ import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import styles from './QuestionItem.module.css'
 import {IonButton, IonCheckbox, IonItem, IonLabel, IonRadio, IonRadioGroup} from "@ionic/react";
 import axios from "axios";
+import SingleAnswer from "../SingleAnswer";
+import MultipleAnswer from "../MultipleAnswer";
+import question from "../../pages/Question";
+import Order from "../Order";
 
 
 interface QuestionItemProps {
@@ -19,6 +23,7 @@ interface QuestionItemProps {
 const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setActive, snippet,type,title, id}) => {
 
     const [answers, setAnswers] = React.useState<any[]>([]);
+
 
     useEffect(() => {
         const fetchAnswers = async () => {
@@ -36,6 +41,8 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setA
     const next = () => {
         if(maxLength > activeSlide) {
             setActive((prevState: number) => prevState + 1);
+        } else {
+            console.log('submit')
         }
     }
 
@@ -53,20 +60,14 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setA
                 {snippet && <SyntaxHighlighter language='javascript' style={docco}>
                     {snippet}
                 </SyntaxHighlighter>}
-
                 <div className={styles.answers}>
-                    <IonRadioGroup value='name'>
-                    {answers && answers.map((answer: any) => (
-                        <IonItem>
-                            <IonRadio value={answer.id}></IonRadio>
-                            <IonLabel>{answer.attributes.text}</IonLabel>
-                        </IonItem>
-                    ))}
-                    </IonRadioGroup>
+                    {type === 'single' && <SingleAnswer answers={answers} />}
+                    {type === 'multiple' && <MultipleAnswer answers={answers} />}
+                    {type === 'order' && <Order answers={answers} />}
                 </div>
                 <div className={styles.actions}>
                     <IonButton disabled={activeSlide <= 1} onClick={prev} fill={'outline'}>Previous</IonButton>
-                    <IonButton disabled={activeSlide === maxLength} onClick={next}>Next</IonButton>
+                    <IonButton disabled={activeSlide > maxLength} onClick={next}>{activeSlide === maxLength ? 'submit' : 'Next'}</IonButton>
                 </div>
             </div>
         </div>

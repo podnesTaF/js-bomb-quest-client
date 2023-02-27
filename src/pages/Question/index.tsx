@@ -12,7 +12,6 @@ const Question = () => {
             try {
                 const {data} = await axios.get('http://localhost:1337/api/modules/1?populate=questions');
                 setQuestions(data.data.attributes.questions.data);
-
             } catch (e) {
                 console.error(e);
             }
@@ -24,7 +23,7 @@ const Question = () => {
 
 
     return (
-        <div>
+        <>
            <div className='menu-wrapper'>
                <Breadcrumb />
            </div>
@@ -35,7 +34,7 @@ const Question = () => {
                     <QuestionItem maxLength={questions.length} setActive={setActiveSlide} activeSlide={activeSlide} key={question.id} id={question.id} title={question.attributes.title} type={question.attributes.type} snippet={question.attributes.snippet} />
                 ))}
             </div>
-        </div>
+        </>
     );
 };
 

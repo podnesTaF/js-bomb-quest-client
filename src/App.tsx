@@ -27,18 +27,14 @@ setupIonicReact();
 
 const App: React.FC = () => {
   return (
-    <IonApp>
+    <IonApp style={{overflow: 'auto'}}>
       <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
-              <Page />
-            </Route>
-          </IonRouterOutlet>
-        </IonSplitPane>
-        <Route path="/js-promises" exact={true}>
-          <Question />
-        </Route>
+          <Route path="/" exact={true}>
+            <Page />
+          </Route>
+          <Route path="/js-promises" exact={true}>
+            <Question />
+          </Route>
       </IonReactRouter>
     </IonApp>
   );
