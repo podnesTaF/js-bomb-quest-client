@@ -13,5 +13,6 @@ export const checkOwnAnswer = (ownAnswer: string, correctAnswer: string) => {
 }
 
 export const checkOrder = (chosenAnswers: IAnswer[]) => {
+    console.log(chosenAnswers)
     return chosenAnswers.every((answer, index) => answer.attributes.position === index);
 }

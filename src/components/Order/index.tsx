@@ -1,22 +1,26 @@
 import {IonItem, IonLabel, IonList, IonReorder, IonReorderGroup, ItemReorderEventDetail} from '@ionic/react';
 import React, {useEffect, useState} from 'react';
 import {IAnswer} from "../../models/IAnswer";
+import {inspect} from "util";
+import styles from "../QuestionItem/QuestionItem.module.css";
 
 interface OrderProps {
     answers: IAnswer[];
-    setSelection: Function;
+    setSelection?: Function;
+    correctAnswer?: any;
+    selectedAnswer?: any;
     questionId: number;
 }
 
-const Order: React.FC<OrderProps> = ({answers, setSelection, questionId}) => {
+const Order: React.FC<OrderProps> = ({answers, setSelection, questionId, selectedAnswer, correctAnswer}) => {
     const [anrws, setAnrws] = useState<IAnswer[]>([]);
 
     useEffect(() => {
-        setAnrws(answers);
+        setAnrws(selectedAnswer || answers);
     }, [answers]);
 
-
     function handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
+        if(!setSelection) return;
         setAnrws(prev => event.detail.complete(prev));
         setSelection((prev: any) => ({...prev, [questionId]: anrws}))
     }
@@ -24,7 +28,7 @@ const Order: React.FC<OrderProps> = ({answers, setSelection, questionId}) => {
 
     return (
         <IonList>
-            <IonReorderGroup disabled={false} onIonItemReorder={(e) => handleReorder(e)}>
+            <IonReorderGroup disabled={!!selectedAnswer} onIonItemReorder={(e) => handleReorder(e)}>
                 {anrws && anrws.map((answer: IAnswer, i) => {
                     let isCorrect = null;
                     if(answer.attributes.position === i) {
@@ -34,7 +38,7 @@ const Order: React.FC<OrderProps> = ({answers, setSelection, questionId}) => {
                     }
                     return (
                         <IonReorder key={answer.id}>
-                            <IonItem color={isCorrect ? 'success' : "danger"}>
+                            <IonItem color={selectedAnswer ? isCorrect ? 'success' : 'danger': "initial"}>
                                 <IonLabel>
                                     {answer.attributes.text}
                                 </IonLabel>

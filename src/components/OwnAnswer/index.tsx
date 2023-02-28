@@ -3,14 +3,17 @@ import {IAnswer} from "../../models/IAnswer";
 import {IonInput, IonItem, IonLabel} from "@ionic/react";
 
 interface OwnAnswerProps {
-    setSelection: Function;
+    setSelection?: Function;
     questionId: number;
+    value?: any;
+    correctAnswer?: any;
 }
 
-const OwnAnswer: React.FC<OwnAnswerProps> = ({questionId, setSelection}) => {
-    const [ownAnswer, setOwnAnswer] = React.useState<string | number | null | undefined>('');
+const OwnAnswer: React.FC<OwnAnswerProps> = ({questionId, setSelection, value, correctAnswer}) => {
+    const [ownAnswer, setOwnAnswer] = React.useState<any>(value || '')
 
     useEffect(() => {
+        if(!setSelection) return;
         setSelection((prev: any) => ({...prev, [questionId]: ownAnswer}))
     }, [ownAnswer]);
 
@@ -18,7 +21,7 @@ const OwnAnswer: React.FC<OwnAnswerProps> = ({questionId, setSelection}) => {
     return (
         <IonItem>
             <IonLabel position="floating">Your Answer</IonLabel>
-            <IonInput onIonChange={e => setOwnAnswer(e.target.value)} value={ownAnswer} placeholder="Enter your answer here"></IonInput>
+            <IonInput color={correctAnswer === ownAnswer ? "success" : !correctAnswer ? 'initial' : 'danger'} onIonChange={e => setOwnAnswer(e.target.value)} value={ownAnswer} placeholder="Enter your answer here"></IonInput>
         </IonItem>
     );
 };

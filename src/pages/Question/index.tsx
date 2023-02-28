@@ -4,23 +4,38 @@ import Breadcrumb from "../../components/Breadcrumb";
 import QuestionItem from "../../components/QuestionItem";
 import {IQuestion} from "../../models/IQuestion";
 import {checkMultipleAnswers, checkOrder, checkOwnAnswer, checkSingleAnswer} from "../../utils/checkAnswers";
+import ResultsIntro from "../../components/ResultsIntro";
+import {countPercentage} from "../../utils/count";
+import {useHistory} from "react-router";
+import {useFetchQuestionsQuery} from "../../services/QuestionService";
+import {IModule} from "../../models/IModule";
+import {IAnswer} from "../../models/IAnswer";
 
-const Question = () => {
-    const [questions, setQuestions] = useState<any>(null);
+interface QuestionProps {
+    module: IModule;
+}
+
+const Question: React.FC<QuestionProps> = ({module}) => {
+    // const [questions, setQuestions] = useState<any>(null);
     const [activeSlide, setActiveSlide] = useState<number>(1);
     const [selection, setSelection] = useState<any>({})
     const [results, setResults] = useState<any[]>([]);
+    const [sectionName, setSectionName] = useState<string>('');
+
+    const {data, error, isLoading} = useFetchQuestionsQuery(module.id)
+
+    const history = useHistory();
 
     useEffect(() => {
-        console.log(results)
-    }, []);
-
+        if(results.length >= data?.data.length) {
+            localStorage.setItem(`results-${module.id}`, JSON.stringify(results));
+            history.push(`/modules/${module.id}/results`)
+        }
+    }, [results])
 
     const submitQuiz = () => {
-        questions.forEach((question: IQuestion) => {
-            // if(!selection[question.id]) {
-            //     return;
-            // }
+        setResults([])
+        data.data.forEach((question: IQuestion) => {
             switch (question.attributes.type) {
                 case 'single':
                     if(question.attributes.answers.data.length === 1) {
@@ -44,31 +59,21 @@ const Question = () => {
                     })
                     break;
                 case 'order':
-                    const structuredAnswer = {questionId: question.id, answer: selection[question.id], correct: checkOrder(selection[question.id])}
-                    setResults((prev: any) => {
+                    let answer: IAnswer[];
+                    if(selection[question.id] && selection[question.id].length > 0) {
+                        answer = selection[question.id];
+                    } else {
+                        answer = question.attributes.answers.data
+                    }
+                    const structuredAnswer = {questionId: question.id, answer, correct: checkOrder(selection[question.id])}
+                    setResults((prev: any[]) => {
                         prev.push(structuredAnswer)
                         return prev;
                     })
                 break;
             }
         })
-        console.log(selection)
     }
-
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            try {
-                const {data} = await axios.get('http://localhost:1337/api/modules/1?populate=questions.answers');
-                setQuestions(data.data.attributes.questions.data);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
-        fetchQuestions();
-    }, [])
-
-
 
     return (
         <>
@@ -77,10 +82,11 @@ const Question = () => {
            </div>
             <div>
                 <h1>JS promises</h1>
-
-                {questions && questions.map((question: any) => (
-                    <QuestionItem setSelection={setSelection} submitQuiz={submitQuiz} maxLength={questions.length} setActive={setActiveSlide} activeSlide={activeSlide} key={question.id} id={question.id} title={question.attributes.title} type={question.attributes.type} snippet={question.attributes.snippet} />
+                {isLoading && <p>Loading...</p>}
+                {data && data.data.map((question: IQuestion) => (
+                    <QuestionItem hint={question.attributes.hint} setSelection={setSelection} submitQuiz={submitQuiz} maxLength={data.data.length} setActive={setActiveSlide} activeSlide={activeSlide} key={question.id} id={question.id} title={question.attributes.title} type={question.attributes.type} snippet={question.attributes.snippet} />
                 ))}
+                {error && <p>error</p>}
             </div>
         </>
     );

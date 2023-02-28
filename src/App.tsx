@@ -2,6 +2,7 @@ import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/r
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Page from './pages/Page';
+import React from "react";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -22,19 +23,33 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Question from "./pages/Question";
+import ResultsPage from "./pages/Results";
+import {useFetchModulesQuery} from "./services/ModuleService";
 
 setupIonicReact();
 
 const App: React.FC = () => {
+    const {data: data, error, isLoading} = useFetchModulesQuery(1)
+
   return (
     <IonApp style={{overflow: 'auto'}}>
       <IonReactRouter>
-          <Route path="/" exact={true}>
-            <Page />
-          </Route>
-          <Route path="/js-promises" exact={true}>
-            <Question />
-          </Route>
+          {isLoading && <p>Loading...</p>}
+          {data?.data && (
+              <Route path="/" exact={true}>
+                  <Page modules={data.data} />
+              </Route>
+              )}
+          {data?.data.map((module: any) => (
+              <React.Fragment key={module.id}>
+                  <Route path={`/modules/${module.id}`} exact={true}>
+                      <Question module={module} />
+                  </Route>
+                  <Route path={`/modules/${module.id}/results`} exact={true}>
+                      <ResultsPage module={module} />
+                  </Route>
+              </React.Fragment>
+          ))}
       </IonReactRouter>
     </IonApp>
   );

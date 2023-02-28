@@ -13,8 +13,13 @@ import { useParams } from 'react-router';
 import './Page.css';
 import React from "react";
 import Levels from "../components/Levels";
+import {IModule} from "../models/IModule";
 
-const Page: React.FC = () => {
+interface PageProps {
+  modules: IModule[];
+}
+
+const Page: React.FC<PageProps> = ({modules}) => {
 
   const { name } = useParams<{ name: string; }>();
 
@@ -29,7 +34,7 @@ const Page: React.FC = () => {
         </p>
       </div>
       <div>
-        <Levels />
+        <Levels modules={modules} />
       </div>
     </IonPage>
   );
