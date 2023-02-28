@@ -16,7 +16,7 @@ const Order: React.FC<OrderProps> = ({answers, setSelection, questionId, selecte
     const [anrws, setAnrws] = useState<IAnswer[]>([]);
 
     useEffect(() => {
-        setAnrws(selectedAnswer || answers);
+        setAnrws(selectedAnswer || [...answers]);
     }, [answers]);
 
     function handleReorder(event: CustomEvent<ItemReorderEventDetail>) {

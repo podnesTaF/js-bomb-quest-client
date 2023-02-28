@@ -19,10 +19,15 @@ const OwnAnswer: React.FC<OwnAnswerProps> = ({questionId, setSelection, value, c
 
 
     return (
-        <IonItem>
-            <IonLabel position="floating">Your Answer</IonLabel>
-            <IonInput color={correctAnswer === ownAnswer ? "success" : !correctAnswer ? 'initial' : 'danger'} onIonChange={e => setOwnAnswer(e.target.value)} value={ownAnswer} placeholder="Enter your answer here"></IonInput>
-        </IonItem>
+        <>
+            <IonItem>
+                <IonLabel style={{whiteSpace: "pre-wrap", opacity: 1}} color={correctAnswer ? correctAnswer === ownAnswer ? "success" : 'danger' : 'initial'}  position="floating">Your Answer</IonLabel>
+                <IonInput disabled={!!correctAnswer} onIonChange={e => setOwnAnswer(e.target.value)} value={ownAnswer} placeholder="Enter your answer here"></IonInput>
+            </IonItem>
+            {correctAnswer &&  <IonItem><IonLabel style={{whiteSpace: "pre-wrap", opacity: 1}} color="success"  position="floating">Correct Answer:</IonLabel>
+                <IonInput disabled={!!correctAnswer} value={correctAnswer} onIonChange={e => setOwnAnswer(e.target.value)} placeholder="Enter your answer here"></IonInput>
+            </IonItem>}
+        </>
     );
 };
 

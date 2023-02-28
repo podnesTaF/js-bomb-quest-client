@@ -19,6 +19,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({module}) => {
 
 
     useEffect(() => {
+        console.log('results:', results)
+    }, [results]);
+
+
+    useEffect(() => {
         setResults(JSON.parse(localStorage.getItem(`results-${module.id}`) || '[]'));
     }, [])
 
@@ -32,8 +37,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({module}) => {
           <div className='qa'>
               <h2>Questions and answers</h2>
               {isLoading && <p>Loading...</p>}
-              {data?.data.map((question: IQuestion, i: number) => (
-                  <QuestionItem hint={question.attributes.hint} maxLength={data.data.length} key={question.id} id={question.id} title={question.attributes.title} type={question.attributes.type} snippet={question.attributes.snippet} isFinished={true} answer={results[i]?.answer} correctAnswer={getCorrectAnswer(question)} />
+              {results.length > 0 && data?.data.map((question: IQuestion, i: number) => (
+                  <QuestionItem hint={question.attributes.hint} maxLength={data.data.length} key={question.id} id={question.id} title={question.attributes.title} type={question.attributes.type} snippet={question.attributes.snippet} isFinished={true} answer={results[i].answer} correctAnswer={getCorrectAnswer(question)} isCorrect={results[i].correct} />
               ))}
           </div>
       </div>

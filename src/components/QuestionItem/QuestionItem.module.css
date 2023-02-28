@@ -7,7 +7,11 @@
     margin-top: 20px;
     border: 1px solid black;
     border-radius: 10px;
-    padding: 10px;
+    /*padding: 10px;*/
+}
+
+.content.success {
+    border: 2px solid green;
 }
 
 .header {
@@ -15,16 +19,30 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     background-color: #ccc;
+}
+
+.header.success {
+    background-color: #2dd36f;
+    color: white;
+}
+
+.header.error {
+    background-color: #eb445a;
+    color: white;
 }
 
 .actions {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    padding: 10px;
 }
 
 .answers {
+    padding: 10px;
     margin: 20px 0;
 }
 
