@@ -2,7 +2,7 @@ import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/r
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Page from './pages/Page';
-import React from "react";
+import React, {useEffect} from "react";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -29,7 +29,7 @@ import {useFetchModulesQuery} from "./services/ModuleService";
 setupIonicReact();
 
 const App: React.FC = () => {
-    const {data: data, error, isLoading} = useFetchModulesQuery(1)
+    const {data: data, error, isLoading} = useFetchModulesQuery(true)
 
   return (
     <IonApp style={{overflow: 'auto'}}>

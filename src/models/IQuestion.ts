@@ -9,6 +9,7 @@ export type IQuestion = {
             data: IAnswer[]
         };
         hint: string;
+        boxes: string | null;
         snippet: string | null;
     }
 }

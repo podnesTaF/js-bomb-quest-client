@@ -3,7 +3,13 @@ import axios from "axios";
 import Breadcrumb from "../../components/Breadcrumb";
 import QuestionItem from "../../components/QuestionItem";
 import {IQuestion} from "../../models/IQuestion";
-import {checkMultipleAnswers, checkOrder, checkOwnAnswer, checkSingleAnswer} from "../../utils/checkAnswers";
+import {
+    checkDraggable,
+    checkMultipleAnswers,
+    checkOrder,
+    checkOwnAnswer,
+    checkSingleAnswer
+} from "../../utils/checkAnswers";
 import ResultsIntro from "../../components/ResultsIntro";
 import {countPercentage} from "../../utils/count";
 import {useHistory} from "react-router";
@@ -71,6 +77,15 @@ const Question: React.FC<QuestionProps> = ({module}) => {
                         return prev;
                     })
                 break;
+                case 'dragable':
+                    console.log('it works twice')
+                    console.log('selections for drgs', selection[question.id])
+                    const selectedAnswers = {questionId : question.id, answer: selection[question.id], correct: checkDraggable(selection[question.id])}
+                    setResults((prev: any[]) => {
+                        prev.push(selectedAnswers)
+                        return prev;
+                    })
+                    break;
             }
         })
     }
@@ -81,10 +96,10 @@ const Question: React.FC<QuestionProps> = ({module}) => {
                <Breadcrumb />
            </div>
             <div>
-                <h1>JS promises</h1>
+                <h1>{module.attributes.name}</h1>
                 {isLoading && <p>Loading...</p>}
-                {data && data.data.map((question: IQuestion) => (
-                    <QuestionItem hint={question.attributes.hint} setSelection={setSelection} submitQuiz={submitQuiz} maxLength={data.data.length} setActive={setActiveSlide} activeSlide={activeSlide} key={question.id} id={question.id} title={question.attributes.title} type={question.attributes.type} snippet={question.attributes.snippet} />
+                {data && data.data.map((question: IQuestion, i: number) => (
+                    <QuestionItem hint={question.attributes.hint} setSelection={setSelection} submitQuiz={submitQuiz} maxLength={data.data.length} setActive={setActiveSlide} activeSlide={activeSlide} key={question.id} id={question.id} questionIdx={i + 1} title={question.attributes.title} type={question.attributes.type} snippet={question.attributes.snippet} boxes={question.attributes.boxes?.split(',')} />
                 ))}
                 {error && <p>error</p>}
             </div>

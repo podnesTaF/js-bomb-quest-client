@@ -9,6 +9,11 @@ export const getCorrectAnswer = (question: IQuestion) => {
         return question.attributes.answers.data[0].attributes.text;
     } else if(question.attributes.type === 'order') {
         return question.attributes.answers.data.map(answer => answer.attributes.position);
+    } else if(question.attributes.type === 'dragable') {
+        const boxes = question.attributes.boxes!.trim().split(',');
+        const c = boxes.map((box, i) => ({id: i, name: box, answers: question.attributes.answers.data.filter(answer => answer.attributes.box === box)}));
+        return c;
+
     }
 
 }

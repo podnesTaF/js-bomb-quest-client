@@ -4,5 +4,6 @@ export type IAnswer = {
         text: string;
         isCorrect: boolean;
         position: number | null;
+        box: string | null;
     }
 }

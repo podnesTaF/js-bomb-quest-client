@@ -13,6 +13,8 @@ import {IAnswer} from "../../models/IAnswer";
 import OwnAnswer from "../OwnAnswer";
 import {useFetchAnswersQuery} from "../../services/AnswerService";
 import clsx from "clsx";
+import DragBoxes from "../DragBoxes";
+import {DraggableAnswer} from "../../models/Results";
 
 
 interface QuestionItemProps {
@@ -30,9 +32,12 @@ interface QuestionItemProps {
     correctAnswer?: any;
     hint: string;
     isCorrect?: boolean
+    boxes?: string[]
+    questionIdx: number
 }
 
-const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setActive, snippet,type,title, id, setSelection, submitQuiz, isFinished, answer, correctAnswer, hint, isCorrect}) => {
+const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setActive, snippet,type,title, id, setSelection, submitQuiz, isFinished, answer, correctAnswer, hint, isCorrect, boxes, questionIdx}) => {
+
 
     const [hintAlert] = useIonAlert();
     const {data, error, isLoading} = useFetchAnswersQuery(id);
@@ -54,8 +59,8 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setA
     }
 
     return (
-        <div className={styles.wrapper} style={{display: activeSlide === id || isFinished ? "block" : "none"}}>
-            <h2>Question {`${id}/${maxLength}`}</h2>
+        <div className={styles.wrapper} style={{display: activeSlide === questionIdx || isFinished ? "block" : "none"}}>
+            <h2>Question {`${questionIdx}/${maxLength}`}</h2>
             <div className={clsx(styles.content, isFinished && isCorrect ? styles.success : styles.error)}>
                 <div className={clsx(styles.header, isFinished ? isCorrect ? styles.success : styles.error : '')}>
                     <h1>{title}</h1>
@@ -82,6 +87,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setA
                            {type === 'single' && data.data.length !== 1 && <SingleAnswer questionId={id} setSelection={setSelection} answers={data.data} correctAnswer={correctAnswer} userAnswer={answer} />}
                            {type === 'multiple' && <MultipleAnswer questionId={id} setSelection={setSelection} answers={data.data} userAnswer={answer} correctAnswer={correctAnswer} />}
                            {type === 'order' && <Order questionId={id} setSelection={setSelection} correctAnswer={correctAnswer} selectedAnswer={answer} answers={data.data} />}
+                           {type ==='dragable' && boxes && <DragBoxes boxNames={boxes} answers={data.data} setSelection={setSelection} questionId={id} correctAnswer={correctAnswer} yourAnswer={answer} />}
                        </>
                     )}
                 </div>

@@ -24,7 +24,7 @@ const Page: React.FC<PageProps> = ({modules}) => {
   const { name } = useParams<{ name: string; }>();
 
   return (
-    <IonPage>
+    <IonPage style={{justifyContent: 'start'}}>
       <div className='intro'>
         <IonText color="primary">
           <h1>Welcome to js - react master Questions</h1>

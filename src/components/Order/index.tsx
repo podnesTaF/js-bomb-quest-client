@@ -1,8 +1,6 @@
 import {IonItem, IonLabel, IonList, IonReorder, IonReorderGroup, ItemReorderEventDetail} from '@ionic/react';
 import React, {useEffect, useState} from 'react';
 import {IAnswer} from "../../models/IAnswer";
-import {inspect} from "util";
-import styles from "../QuestionItem/QuestionItem.module.css";
 
 interface OrderProps {
     answers: IAnswer[];

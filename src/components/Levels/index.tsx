@@ -12,16 +12,19 @@ const Levels: React.FC<LevelsProps> = ({modules}) => {
     const history = useHistory();
 
     return (
-        <div className={styles.container}>
+        <div className={styles.stepper}>
             {modules.map((module, i) => (
-                <div key={module.id} onClick={() => history.push('/modules/' + module.id)}  className={clsx(styles.level, styles.available)}>
-                    <h3>{module.attributes.name}</h3>
-                    <div className={styles.circle}></div>
-                    {i === 0 &&
-                        <div className={styles.connector}></div>}
-                    {i === 1 &&  <div className={styles.connectorOdd}></div>}
-                    {i === 2 &&  <div className={styles.connectorLast}></div>}
-                </div>
+                <>
+                    <div key={module.id} onClick={() => history.push('/modules/' + module.id)}  className={clsx(styles.step, styles.available)}>
+                        <div className={styles.stepNumber}>
+                            {module.id}
+                        </div>
+                        <div className={styles.stepTitle}>
+                            <h3>{module.attributes.name}</h3>
+                        </div>
+                    </div>
+                    {i < modules.length - 1 && <div className={styles.stepDivider} />}
+                </>
             ))}
         </div>
     );

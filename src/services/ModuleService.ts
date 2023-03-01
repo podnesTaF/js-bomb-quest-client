@@ -1,8 +1,9 @@
 import {api} from "./api";
+import {IModule} from "../models/IModule";
 
 export const moduleService = api.injectEndpoints({
     endpoints: (build) => ({
-        fetchModules: build.query({
+        fetchModules: build.query<any, boolean>({
             query: () => ({
                 url: '/modules',
             })

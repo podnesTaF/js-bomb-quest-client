@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import ResultsIntro from "../../components/ResultsIntro";
 import {countPercentage} from "../../utils/count";
-import {useHistory, useParams} from "react-router";
 import Breadcrumb from "../../components/Breadcrumb";
 import {IModule} from "../../models/IModule";
 import {useFetchQuestionsQuery} from "../../services/QuestionService";
@@ -19,29 +18,32 @@ const ResultsPage: React.FC<ResultsPageProps> = ({module}) => {
 
 
     useEffect(() => {
-        console.log('results:', results)
-    }, [results]);
-
-
-    useEffect(() => {
         setResults(JSON.parse(localStorage.getItem(`results-${module.id}`) || '[]'));
     }, [])
 
     return (
-      <div>
-          <div>
-              <Breadcrumb />
-              <div className='stripe'></div>
-          </div>
-          {results.length > 0 && <ResultsIntro sectionName={module.attributes.name} percentage={countPercentage(results)} />}
-          <div className='qa'>
-              <h2>Questions and answers</h2>
-              {isLoading && <p>Loading...</p>}
-              {results.length > 0 && data?.data.map((question: IQuestion, i: number) => (
-                  <QuestionItem hint={question.attributes.hint} maxLength={data.data.length} key={question.id} id={question.id} title={question.attributes.title} type={question.attributes.type} snippet={question.attributes.snippet} isFinished={true} answer={results[i].answer} correctAnswer={getCorrectAnswer(question)} isCorrect={results[i].correct} />
-              ))}
-          </div>
-      </div>
+        <div>
+            <div>
+                <Breadcrumb/>
+                <div className='stripe'></div>
+            </div>
+            {results.length > 0 &&
+                <ResultsIntro sectionName={module.attributes.name} percentage={countPercentage(results)}/>}
+            <div className='qa'>
+                <h2>Questions and answers</h2>
+                {isLoading && <p>Loading...</p>}
+                {results.length > 0 && data?.data.map((question: IQuestion, i: number) => (
+                    <QuestionItem hint={question.attributes.hint} maxLength={data.data.length} key={question.id}
+                                  id={question.id} title={question.attributes.title} type={question.attributes.type}
+                                  snippet={question.attributes.snippet} isFinished={true} answer={results[i].answer}
+                                  correctAnswer={getCorrectAnswer(question)}
+                                  boxes={question.attributes.boxes?.split(',')}
+                                  isCorrect={results[i].correct}
+                                  questionIdx={i + 1}
+                    />
+                ))}
+            </div>
+        </div>
     );
 };
 

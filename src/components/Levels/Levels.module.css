@@ -1,75 +1,44 @@
-.container {
+.stepper {
     display: flex;
     flex-direction: column;
-    margin: 20px;
-    align-items: center;
-    justify-content: center;
-}
-
-.level {
-    display: flex;
-    position: relative;
-    height: 120px;
     /*align-items: center;*/
+    margin: 20px;
+    height: 100%;
 }
 
-.available.level .circle {
-    background-color: green;
-}
-
-.available.level .connector {
-    border-color: green;
-}
-
-.level h3 {
-    font-size: 1.4rem;
-    margin: 15px;
-}
-
-.circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: lightgrey;
+.step {
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 10px;
-    z-index: 2;
-    cursor: pointer;
+    margin-bottom: 10px;
+    position: relative;
 }
 
-.level:nth-child(even) {
-    flex-flow: row-reverse;
+.stepNumber {
+    background-color: #5cb85c;
+    color: #fff;
 }
 
-.connector {
-    border: 1px solid gray;
-    height: 180px;
-    position: absolute;
-    right: 120px;
-    top: 20px;
-    transform: rotate(50deg);
+.stepNumber {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #5cb85c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
 }
 
-.connectorOdd {
-    border: 1px solid gray;
-    height: 220px;
-    position: absolute;
-    right: 90px;
-    top: -15px;
-    transform: rotate(-57deg);
+.stepTitle {
+    font-size: 18px;
+    font-weight: bold;
 }
 
-.connectorLast {
-    border: 1px solid gray;
-    height: 240px;
-    position: absolute;
-    right: 130px;
-    top: -30px;
-    transform: rotate(60deg);
+.stepDivider {
+   width: 2px;
+    height: 100px;
+    background-color: #5cb85c;
+
 }
-
-
-
-
