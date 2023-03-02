@@ -32,6 +32,7 @@ const DragBoxes: React.FC<DragBoxesProps> = ({
     })));
     const [options, setOptions] = useState<IAnswer[]>(answers);
 
+
     useEffect(() => {
         if (setSelection) {
             setSelection((prev: any) => ({...prev, [questionId]: boxes}))
@@ -79,7 +80,7 @@ const DragBoxes: React.FC<DragBoxesProps> = ({
                         <h2>Your answer</h2>
                     </div>
                 )}
-                {boxes?.map((box: any, index: number) => (
+                {boxes && boxes?.map((box: any, index: number) => (
                     <div className={styles.box} key={box.id}>
                         <IonCardHeader>
                             <IonCardTitle>{box.name}</IonCardTitle>

@@ -13,6 +13,5 @@ export const getCorrectAnswer = (question: IQuestion) => {
         const boxes = question.attributes.boxes!.trim().split(',');
         const c = boxes.map((box, i) => ({id: i, name: box, answers: question.attributes.answers.data.filter(answer => answer.attributes.box === box)}));
         return c;
-
     }
 }

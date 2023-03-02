@@ -3,6 +3,7 @@ import {IModule} from "../../models/IModule";
 import styles from './ModuleItem.module.css';
 import {IonButton} from "@ionic/react";
 import {defineColor} from "../../utils/count";
+import {NavLink} from "react-router-dom";
 
 interface ModuleItemProps {
     module: IModule;
@@ -19,12 +20,16 @@ const ModuleItem: React.FC<ModuleItemProps> = ({module}) => {
                     <h4>Complexity</h4>
                 </div>
                 <div className={styles.btns}>
-                    {isFinished && <IonButton href={'/modules/' + module.id + '/results'} fill={'outline'} color={'dark'}>
-                        Last Results
-                    </IonButton>}
-                    <IonButton fill={'outline'} href={'/modules/' + module.id} color={'success'}>
-                        Start Quiz
-                    </IonButton>
+                    {isFinished && <NavLink to={'/modules/' + module.id + '/results'}>
+                         <IonButton fill={'outline'} color={'dark'}>
+                            Last Results
+                        </IonButton>
+                    </NavLink>}
+                    <NavLink to={'/modules/' + module.id}>
+                        <IonButton fill={'outline'} color={'success'}>
+                            Start Quiz
+                        </IonButton>
+                    </NavLink>
                 </div>
             </div>
             <div className={styles.rate}>

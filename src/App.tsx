@@ -32,7 +32,7 @@ const App: React.FC = () => {
     const {data: data, error, isLoading} = useFetchModulesQuery(true)
 
   return (
-    <IonApp style={{overflow: 'auto'}}>
+    <IonApp style={{overflow: 'auto', justifyContent: 'start'}}>
       <IonReactRouter>
           {isLoading && <p>Loading...</p>}
           {data?.data && (

@@ -30,7 +30,7 @@ const SingleAnswer: React.FC<SingleAnswerProps> = ({answers, setSelection, quest
                     return (
                         <IonRadioGroup key={answer.id} value={correctAnswer}>
                             <IonItem className={styles.correct} key={answer.id}>
-                                <IonLabel style={{whiteSpace: "pre-wrap"}}>{answer.attributes.text}</IonLabel>
+                                <IonLabel style={{whiteSpace: "pre-wrap"}}>{answer.attributes.text} <span style={{color: '#ccc'}}>- correct answer</span></IonLabel>
                                 <IonRadio color='success' slot='start' value={answer.id}></IonRadio>
                             </IonItem>
                         </IonRadioGroup>

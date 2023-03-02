@@ -23,6 +23,8 @@ const MultipleAnswer: React.FC<MultipleAnswerProps> = ({answers, setSelection, q
     const onChange = (e: any) => {
         if(e.detail.checked) {
             setValues(prev => [...prev, e.detail.value]);
+        } else {
+            setValues(prev => prev.filter(v => v !== e.detail.value))
         }
     }
 

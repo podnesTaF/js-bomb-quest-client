@@ -5,7 +5,9 @@ import {NavLink} from "react-router-dom";
 const Breadcrumb: React.FC<{items?: string[], moduleId?: number}> = ({items, moduleId}) => {
     return (
         <IonBreadcrumbs>
-            <IonBreadcrumb className='menu-item' href="/">/ modules</IonBreadcrumb>
+            <NavLink className='link' to={'/'}>
+                <IonBreadcrumb className='menu-item'>/ modules</IonBreadcrumb>
+            </NavLink>
             {items?.length && <NavLink style={{textDecoration: 'none'}} to={'/modules/' + moduleId}>
                 <IonBreadcrumb className='menu-item'>{items[0]}</IonBreadcrumb>
             </NavLink>}

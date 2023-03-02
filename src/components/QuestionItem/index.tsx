@@ -34,16 +34,17 @@ interface QuestionItemProps {
     isCorrect?: boolean
     boxes?: string[]
     questionIdx: number
+    setResults?: Function
 }
 
-const QuestionItem: React.FC<QuestionItemProps> = ({ maxLength,activeSlide, setActive, snippet,type,title, id, setSelection, submitQuiz, isFinished, answer, correctAnswer, hint, isCorrect, boxes, questionIdx}) => {
+const QuestionItem: React.FC<QuestionItemProps> = ({setResults ,maxLength,activeSlide, setActive, snippet,type,title, id, setSelection, submitQuiz, isFinished, answer, correctAnswer, hint, isCorrect, boxes, questionIdx}) => {
 
 
     const [hintAlert] = useIonAlert();
     const {data, error, isLoading} = useFetchAnswersQuery(id);
 
     const next = () => {
-        if(!activeSlide || !setActive || !submitQuiz) return
+        if(!activeSlide || !setActive || !submitQuiz || !setResults) return
         if(maxLength > activeSlide) {
             setActive((prevState: number) => prevState + 1);
         } else {
