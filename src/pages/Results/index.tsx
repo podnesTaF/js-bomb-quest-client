@@ -31,18 +31,22 @@ const ResultsPage: React.FC<ResultsPageProps> = ({module}) => {
             {Object.keys(results).length > 0 &&
                 <ResultsIntro sectionName={module.attributes.name} percentage={countPercentage(results)}/>}
             <div className='qa'>
-                <h2>Questions and answers</h2>
+                <div className='title'>
+                    <h2>Questions and answers</h2>
+                </div>
                 {isLoading &&  <IonProgressBar type="indeterminate"></IonProgressBar>}
-                {Object.keys(results).length > 0 && data?.data.map((question: IQuestion, i: number) => (
-                    <QuestionItem hint={question.attributes.hint} maxLength={data.data.length} key={question.id}
-                                  id={question.id} title={question.attributes.title} type={question.attributes.type}
-                                  snippet={question.attributes.snippet} isFinished={true} answer={results[question.id].answer}
-                                  correctAnswer={getCorrectAnswer(question)}
-                                  boxes={question.attributes.boxes?.split(',')}
-                                  isCorrect={results[question.id].correct}
-                                  questionIdx={i + 1}
-                    />
-                ))}
+                <div className='questions'>
+                    {Object.keys(results).length > 0 && data?.data.map((question: IQuestion, i: number) => (
+                        <QuestionItem hint={question.attributes.hint} maxLength={data.data.length} key={question.id}
+                                      id={question.id} title={question.attributes.title} type={question.attributes.type}
+                                      snippet={question.attributes.snippet} isFinished={true} answer={results[question.id].answer}
+                                      correctAnswer={getCorrectAnswer(question)}
+                                      boxes={question.attributes.boxes?.split(',')}
+                                      isCorrect={results[question.id].correct}
+                                      questionIdx={i + 1}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

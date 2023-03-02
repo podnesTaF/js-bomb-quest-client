@@ -32,7 +32,7 @@ const Order: React.FC<OrderProps> = ({answers, setSelection, questionId, selecte
                     isCorrect = answer.attributes.position === i;
                     return (
                         <IonReorder key={answer.id}>
-                            <IonItem color={selectedAnswer ? isCorrect ? 'success' : 'danger': "initial"}>
+                            <IonItem color={selectedAnswer ? isCorrect ? 'success' : 'warning': "initial"}>
                                 <IonLabel>
                                     {answer.attributes.text}
                                 </IonLabel>
