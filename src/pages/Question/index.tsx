@@ -93,7 +93,7 @@ const Question: React.FC<QuestionProps> = ({module}) => {
     return (
         <>
            <div className='menu-wrapper'>
-               <Breadcrumb />
+               <Breadcrumb items={[module.attributes.name]} moduleId={module.id} />
            </div>
             <div>
                 <h1>{module.attributes.name}</h1>

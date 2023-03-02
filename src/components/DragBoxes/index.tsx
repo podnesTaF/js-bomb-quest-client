@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from "./DragBoxes.module.css";
 import {IonCardHeader, IonCardTitle} from "@ionic/react";
 import {IAnswer} from "../../models/IAnswer";
@@ -16,17 +16,27 @@ interface DragBoxesProps {
     yourAnswer?: DraggableAnswer[];
 }
 
-const DragBoxes: React.FC<DragBoxesProps> = ({boxNames, questionId, setSelection, answers, yourAnswer, correctAnswer}) => {
+const DragBoxes: React.FC<DragBoxesProps> = ({
+                                                 boxNames,
+                                                 questionId,
+                                                 setSelection,
+                                                 answers,
+                                                 yourAnswer,
+                                                 correctAnswer
+                                             }) => {
 
-    const [boxes, setBoxes] = useState<DraggableAnswer[]>(yourAnswer || boxNames.map((box: string, index: number) => ({ id: index, name: box, answers: [] })));
+    const [boxes, setBoxes] = useState<DraggableAnswer[]>(yourAnswer || boxNames.map((box: string, index: number) => ({
+        id: index,
+        name: box,
+        answers: []
+    })));
     const [options, setOptions] = useState<IAnswer[]>(answers);
 
     useEffect(() => {
-        if(setSelection) {
+        if (setSelection) {
             setSelection((prev: any) => ({...prev, [questionId]: boxes}))
         }
     }, [boxes]);
-
 
 
     function handleDragStart(e: React.DragEvent<HTMLDivElement>, answer: IAnswer) {
@@ -37,21 +47,24 @@ const DragBoxes: React.FC<DragBoxesProps> = ({boxNames, questionId, setSelection
         e.preventDefault();
     }
 
-    function handleDrop(e:React.DragEvent<HTMLDivElement>, box: any) {
+    function handleDrop(e: React.DragEvent<HTMLDivElement>, box: any) {
         const answerId = e.dataTransfer.getData("answerId");
         const answer = options.find(a => a.id === parseInt(answerId))!;
         const updatedAnswers = options.filter(a => a.id !== answer.id);
-        const updatedBox = { ...box, answers: [...box.answers, answer] };
+        const updatedBox = {...box, answers: [...box.answers, answer]};
         const updatedBoxes = boxes!.map(b => (b.id === box.id ? updatedBox : b));
         setOptions(updatedAnswers);
         setBoxes(updatedBoxes);
     }
 
     function handleAnswerClick(answer: IAnswer) {
-        if(!setSelection) return;
+        if (!setSelection) return;
         const updatedAnswers = [...options, answer];
         const updatedBoxId = boxes!.findIndex(b => b.answers.includes(answer));
-        const updatedBox = { ...boxes![updatedBoxId], answers: boxes![updatedBoxId].answers.filter(a => a.id !== answer.id) };
+        const updatedBox = {
+            ...boxes![updatedBoxId],
+            answers: boxes![updatedBoxId].answers.filter(a => a.id !== answer.id)
+        };
         const updatedBoxes = [...boxes!];
         updatedBoxes.splice(updatedBoxId, 1, updatedBox);
         setOptions(updatedAnswers);
@@ -72,10 +85,13 @@ const DragBoxes: React.FC<DragBoxesProps> = ({boxNames, questionId, setSelection
                             <IonCardTitle>{box.name}</IonCardTitle>
                         </IonCardHeader>
                         <div onDragOver={handleDragOver}
-                             onDrop={e => handleDrop(e, box)} className={clsx(styles.area, box.answers.length > 0 && styles.fit, yourAnswer && answers.some(answer => answer.attributes.box === box.name) ? styles.correct : yourAnswer ? styles.wrong : '')}>
+                             onDrop={e => handleDrop(e, box)}
+                             className={clsx(styles.area, box.answers.length > 0 && styles.fit, yourAnswer && answers.some(answer => answer.attributes.box === box.name) ? styles.correct : yourAnswer ? styles.wrong : '')}>
                             {box.answers.length > 0
                                 ? box.answers.map((answer: IAnswer) => (
-                                    <div key={answer.id} className={clsx(styles.answer, styles.answerInBox, yourAnswer && answer.attributes.box === box.name ? styles.correct : yourAnswer ? styles.wrong : '')} onClick={() => handleAnswerClick(answer)}>
+                                    <div key={answer.id}
+                                         className={clsx(styles.answer, styles.answerInBox, yourAnswer && answer.attributes.box === box.name ? styles.correct : yourAnswer ? styles.wrong : '')}
+                                         onClick={() => handleAnswerClick(answer)}>
                                         <SyntaxHighlighter language='javascript' style={docco}>
                                             {answer.attributes.text}
                                         </SyntaxHighlighter>
@@ -95,7 +111,7 @@ const DragBoxes: React.FC<DragBoxesProps> = ({boxNames, questionId, setSelection
                 )}
                 {!correctAnswer && options && options.map((answer: IAnswer) => (
                     <div draggable="true"
-                          onDragStart={e => handleDragStart(e, answer)} className={styles.answer} key={answer.id}>
+                         onDragStart={e => handleDragStart(e, answer)} className={styles.answer} key={answer.id}>
                         <SyntaxHighlighter language='javascript' style={docco}>
                             {answer.attributes.text}
                         </SyntaxHighlighter>
@@ -107,10 +123,13 @@ const DragBoxes: React.FC<DragBoxesProps> = ({boxNames, questionId, setSelection
                             <IonCardTitle>{box.name}</IonCardTitle>
                         </IonCardHeader>
                         <div onDragOver={handleDragOver}
-                             onDrop={e => handleDrop(e, box)} className={clsx(styles.area, box.answers.length > 0 && styles.fit, styles.correct)}>
+                             onDrop={e => handleDrop(e, box)}
+                             className={clsx(styles.area, box.answers.length > 0 && styles.fit, styles.correct)}>
                             {box.answers.length > 0
                                 ? box.answers.map((answer: IAnswer) => (
-                                    <div key={answer.id} className={clsx(styles.answer, styles.answerInBox, styles.correct)} onClick={() => handleAnswerClick(answer)}>
+                                    <div key={answer.id}
+                                         className={clsx(styles.answer, styles.answerInBox, styles.correct)}
+                                         onClick={() => handleAnswerClick(answer)}>
                                         <SyntaxHighlighter language='javascript' style={docco}>
                                             {answer.attributes.text}
                                         </SyntaxHighlighter>

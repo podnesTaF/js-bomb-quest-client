@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:1337/api'
+    baseUrl: 'https://js-bomb-quest-server.up.railway.app/api'
 })
 
 const baseQueryWithRetry = retry(baseQuery, { maxRetries: 6 })

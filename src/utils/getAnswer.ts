@@ -15,5 +15,4 @@ export const getCorrectAnswer = (question: IQuestion) => {
         return c;
 
     }
-
 }

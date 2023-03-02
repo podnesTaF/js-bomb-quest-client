@@ -113,3 +113,17 @@
     display: flex;
     justify-content: center;
 }
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .boxesContainer {
+        width: 100%;
+    }
+
+    .answers {
+        width: 100%;
+    }
+}

@@ -8,5 +8,6 @@ export interface IModule {
         questions: {
             data: IQuestion[]
         };
+        complexity: number;
     }
 }

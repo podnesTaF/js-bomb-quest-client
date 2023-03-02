@@ -24,7 +24,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({module}) => {
     return (
         <div>
             <div>
-                <Breadcrumb/>
+                <Breadcrumb items={[module.attributes.name, 'results']} moduleId={module.id}/>
                 <div className='stripe'></div>
             </div>
             {results.length > 0 &&
