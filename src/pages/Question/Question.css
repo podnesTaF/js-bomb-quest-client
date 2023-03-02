@@ -1,4 +1,8 @@
-.menu-wrapper {
-    overflow-y: auto;
-    margin-bottom: 20px;
+.module-title {
+    margin: 0;
+    font-size: 30px;
+    text-align: end;
+    padding: 20px 10px;
+    background-color: #4EB1BA;
+    color: white;
 }

@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React from 'react';
 import styles from './ResultsIntro.module.css';
 import {IonText} from "@ionic/react";
 
@@ -18,15 +18,15 @@ const ResultsIntro: React.FC<ResultIntroProps> = ({sectionName, percentage}) => 
                 <p>
                     You passed section:
                 </p>
-                <IonText color="dark">
+                <IonText color="light">
                     <h1>{sectionName}</h1>
                 </IonText>
                 <p>
-                    your score is: <IonText color="success">{percentage}%</IonText>
+                    your score is: <IonText color="light">{percentage}%</IonText>
                 </p>
             </div>
             <div className={styles.wrapper}>
-                <div style={{background: `linear-gradient(to right, #00a680 ${percentage}%, transparent 0) content-box`}}
+                <div style={{background: `linear-gradient(to right, white ${percentage}%, transparent 0) content-box`}}
                      className={styles.circle}>
                     <IonText color="dark">
                         <h2>{percentage}%</h2>

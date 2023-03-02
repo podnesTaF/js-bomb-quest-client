@@ -1,20 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import styles from './QuestionItem.module.css'
-import {IonButton, IonIcon, IonItem, IonLabel, IonSpinner, useIonAlert} from "@ionic/react";
-import {informationCircleOutline} from 'ionicons/icons';
-import axios from "axios";
+import {IonButton, IonIcon, IonItem, IonSpinner, useIonAlert} from "@ionic/react";
+import {helpCircle, informationCircleOutline, personCircle} from 'ionicons/icons';
 import SingleAnswer from "../SingleAnswer";
 import MultipleAnswer from "../MultipleAnswer";
-import question from "../../pages/Question";
 import Order from "../Order";
-import {IAnswer} from "../../models/IAnswer";
 import OwnAnswer from "../OwnAnswer";
 import {useFetchAnswersQuery} from "../../services/AnswerService";
 import clsx from "clsx";
-import DragBoxes from "../DragBoxes";
-import {DraggableAnswer} from "../../models/Results";
+import DragSection from "../DragSection";
 
 
 interface QuestionItemProps {
@@ -71,14 +67,16 @@ const QuestionItem: React.FC<QuestionItemProps> = ({setResults ,maxLength,active
                             message: hint,
                             cssClass: 'hint-alert',
                             buttons: [{text: 'Thanks!', cssClass: 'hint-alert-button'}]
-                        })} color={'primary'}>
-                            <IonIcon icon={informationCircleOutline} slot='icon-only'></IonIcon>
+                        })} color={'light'} fill={'clear'}>
+                            <IonIcon icon={helpCircle} slot="icon-only" size={'large'}></IonIcon>
                         </IonButton>
                     </div>
                 </div>
-                {snippet && <SyntaxHighlighter language='javascript' style={docco}>
-                    {snippet}
-                </SyntaxHighlighter>}
+                <div className={styles.snippetWrapper}>
+                    {snippet && <SyntaxHighlighter className={styles.snippet} language='javascript' style={docco}>
+                        {snippet}
+                    </SyntaxHighlighter>}
+                </div>
                 <div className={styles.answers}>
                     {isLoading && <IonItem>
                         <IonSpinner name="crescent"></IonSpinner>
@@ -90,7 +88,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({setResults ,maxLength,active
                            {type === 'single' && data.data.length !== 1 && <SingleAnswer questionId={id} setSelection={setSelection} answers={data.data} correctAnswer={correctAnswer} userAnswer={answer} />}
                            {type === 'multiple' && <MultipleAnswer questionId={id} setSelection={setSelection} answers={data.data} userAnswer={answer} correctAnswer={correctAnswer} />}
                            {type === 'order' && <Order questionId={id} setSelection={setSelection} correctAnswer={correctAnswer} selectedAnswer={answer} answers={data.data} />}
-                           {type ==='dragable' && boxes && <DragBoxes boxNames={boxes} answers={data.data} setSelection={setSelection} questionId={id} correctAnswer={correctAnswer} yourAnswer={answer} />}
+                           {type ==='dragable' && boxes && <DragSection boxNames={boxes} answers={data.data} setSelection={setSelection} questionId={id} correctAnswer={correctAnswer} yourAnswer={answer} />}
                        </>
                     )}
                 </div>

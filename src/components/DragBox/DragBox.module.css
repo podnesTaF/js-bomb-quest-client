@@ -1,16 +1,3 @@
-.wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    /*align-items: center;*/
-}
-
-.boxesContainer {
-    width: 45%;
-    height: 100%;
-}
-
 .area {
     min-height: 60px;
     background-color: white;
@@ -57,6 +44,15 @@
     flex-wrap: wrap;
 }
 
+.box {
+    width: 100%;
+    height: 100%;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+}
+
 .answer {
     width: 100%;
     height: 100%;
@@ -73,9 +69,6 @@
     padding: 0 10px;
     border-radius: 5px;
     background-color: #f1f1f1;
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
 }
 
 .answerInBox.correct {
@@ -99,30 +92,7 @@
     margin-bottom: 20px;
 }
 
-.box {
-    width: 100%;
-    height: 100%;
-    /*min-height: 130px;*/
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 10px;
-}
-
-.title {
-    display: flex;
-    justify-content: center;
-}
-
 @media screen and (max-width: 768px) {
-    .wrapper {
-        flex-direction: column;
-    }
-
-    .boxesContainer {
-        width: 100%;
-    }
-
     .answers {
         width: 100%;
     }

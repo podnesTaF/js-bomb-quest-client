@@ -26,14 +26,10 @@ const Order: React.FC<OrderProps> = ({answers, setSelection, questionId, selecte
 
     return (
         <IonList>
-            <IonReorderGroup disabled={!!selectedAnswer} onIonItemReorder={(e) => handleReorder(e)}>
+            <IonReorderGroup disabled={!!correctAnswer} onIonItemReorder={(e) => handleReorder(e)}>
                 {anrws && anrws.map((answer: IAnswer, i) => {
                     let isCorrect = null;
-                    if(answer.attributes.position === i) {
-                        isCorrect = true;
-                    } else {
-                        isCorrect = false;
-                    }
+                    isCorrect = answer.attributes.position === i;
                     return (
                         <IonReorder key={answer.id}>
                             <IonItem color={selectedAnswer ? isCorrect ? 'success' : 'danger': "initial"}>

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {IAnswer} from "../../models/IAnswer";
 import styles from "../QuestionItem/QuestionItem.module.css";
 import {IonItem, IonLabel, IonRadio, IonRadioGroup} from "@ionic/react";

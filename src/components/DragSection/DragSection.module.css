@@ -1,0 +1,48 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.answers {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.answer {
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    cursor: grab;
+}
+
+.boxesContainer {
+    width: 45%;
+    height: 100%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .boxesContainer {
+        width: 100%;
+    }
+
+    .answers {
+        width: 100%;
+    }
+}

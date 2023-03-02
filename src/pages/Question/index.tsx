@@ -10,8 +10,6 @@ import {
     checkOwnAnswer,
     checkSingleAnswer
 } from "../../utils/checkAnswers";
-import ResultsIntro from "../../components/ResultsIntro";
-import {countPercentage} from "../../utils/count";
 import {useHistory} from "react-router";
 import {useFetchQuestionsQuery} from "../../services/QuestionService";
 import {IModule} from "../../models/IModule";
@@ -19,6 +17,7 @@ import {IAnswer} from "../../models/IAnswer";
 import {getCorrectAnswer} from "../../utils/getAnswer";
 import {IonProgressBar} from "@ionic/react";
 
+import './Question.css'
 interface QuestionProps {
     module: IModule;
 }
@@ -126,24 +125,26 @@ const Question: React.FC<QuestionProps> = ({module}) => {
 
     return (
         <>
-            <div className='menu-wrapper'>
+            <div className='menu'>
                 <Breadcrumb items={[module.attributes.name]} moduleId={module.id}/>
             </div>
             <div>
-                <h1>{module.attributes.name}</h1>
+                <h1 className='module-title'>{module.attributes.name}</h1>
                 {isLoading && (
                     <IonProgressBar type="indeterminate"></IonProgressBar>
                 )}
                 {data && (
                     <IonProgressBar value={progress}></IonProgressBar>
                 )}
-                {data && data.data.map((question: IQuestion, i: number) => (
-                    <QuestionItem setResults={setResults} hint={question.attributes.hint} setSelection={setSelection} submitQuiz={submitQuiz}
-                                  maxLength={data.data.length} setActive={setActiveSlide} activeSlide={activeSlide}
-                                  key={question.id} id={question.id} questionIdx={i + 1}
-                                  title={question.attributes.title} type={question.attributes.type}
-                                  snippet={question.attributes.snippet} boxes={question.attributes.boxes?.split(',')}/>
-                ))}
+                <div className='main'>
+                    {data && data.data.map((question: IQuestion, i: number) => (
+                        <QuestionItem setResults={setResults} hint={question.attributes.hint} setSelection={setSelection} submitQuiz={submitQuiz}
+                                      maxLength={data.data.length} setActive={setActiveSlide} activeSlide={activeSlide}
+                                      key={question.id} id={question.id} questionIdx={i + 1}
+                                      title={question.attributes.title} type={question.attributes.type}
+                                      snippet={question.attributes.snippet} boxes={question.attributes.boxes?.split(',')}/>
+                    ))}
+                </div>
                 {error && <p>error</p>}
             </div>
         </>

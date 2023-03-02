@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './Levels.module.css';
-import clsx from 'clsx';
 import {useHistory} from "react-router";
 import {IModule} from "../../models/IModule";
 import ModuleItem from "../ModuleItem";

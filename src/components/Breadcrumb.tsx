@@ -6,7 +6,7 @@ const Breadcrumb: React.FC<{items?: string[], moduleId?: number}> = ({items, mod
     return (
         <IonBreadcrumbs>
             <NavLink className='link' to={'/'}>
-                <IonBreadcrumb className='menu-item'>/ modules</IonBreadcrumb>
+                <IonBreadcrumb className='menu-item'>modules</IonBreadcrumb>
             </NavLink>
             {items?.length && <NavLink style={{textDecoration: 'none'}} to={'/modules/' + moduleId}>
                 <IonBreadcrumb className='menu-item'>{items[0]}</IonBreadcrumb>

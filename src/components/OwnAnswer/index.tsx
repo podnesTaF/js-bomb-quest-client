@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {IAnswer} from "../../models/IAnswer";
 import {IonInput, IonItem, IonLabel} from "@ionic/react";
 
 interface OwnAnswerProps {

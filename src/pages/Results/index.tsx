@@ -7,6 +7,7 @@ import {useFetchQuestionsQuery} from "../../services/QuestionService";
 import {IQuestion} from "../../models/IQuestion";
 import QuestionItem from "../../components/QuestionItem";
 import {getCorrectAnswer} from "../../utils/getAnswer";
+import {IonProgressBar} from "@ionic/react";
 
 interface ResultsPageProps {
     module: IModule;
@@ -24,15 +25,14 @@ const ResultsPage: React.FC<ResultsPageProps> = ({module}) => {
 
     return (
         <div>
-            <div>
+            <div className='menu'>
                 <Breadcrumb items={[module.attributes.name, 'results']} moduleId={module.id}/>
-                <div className='stripe'></div>
             </div>
             {Object.keys(results).length > 0 &&
                 <ResultsIntro sectionName={module.attributes.name} percentage={countPercentage(results)}/>}
             <div className='qa'>
                 <h2>Questions and answers</h2>
-                {isLoading && <p>Loading...</p>}
+                {isLoading &&  <IonProgressBar type="indeterminate"></IonProgressBar>}
                 {Object.keys(results).length > 0 && data?.data.map((question: IQuestion, i: number) => (
                     <QuestionItem hint={question.attributes.hint} maxLength={data.data.length} key={question.id}
                                   id={question.id} title={question.attributes.title} type={question.attributes.type}
