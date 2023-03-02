@@ -1,4 +1,4 @@
-import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
+import {IonApp, IonProgressBar, IonRouterOutlet, IonSplitPane, setupIonicReact} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Page from './pages/Page';
@@ -34,7 +34,9 @@ const App: React.FC = () => {
   return (
     <IonApp style={{overflow: 'auto', justifyContent: 'start'}}>
       <IonReactRouter>
-          {isLoading && <p>Loading...</p>}
+          {isLoading && (
+               <IonProgressBar type="indeterminate"></IonProgressBar>
+          )}
           {data?.data && (
               <Route path="/" exact={true}>
                   <Page modules={data.data} />

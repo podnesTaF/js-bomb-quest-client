@@ -17,6 +17,7 @@ import {useFetchQuestionsQuery} from "../../services/QuestionService";
 import {IModule} from "../../models/IModule";
 import {IAnswer} from "../../models/IAnswer";
 import {getCorrectAnswer} from "../../utils/getAnswer";
+import {IonProgressBar} from "@ionic/react";
 
 interface QuestionProps {
     module: IModule;
@@ -27,10 +28,22 @@ const Question: React.FC<QuestionProps> = ({module}) => {
     const [activeSlide, setActiveSlide] = useState<number>(1);
     const [selection, setSelection] = useState<any>({})
     const [results, setResults] = useState<any>({});
+    const [progress, setProgress] = useState<number>(0);
 
     const {data, error, isLoading} = useFetchQuestionsQuery(module.id)
 
     const history = useHistory();
+
+    useEffect(() => {
+        // if ()
+        const length = data?.data.length;
+        console.log(length, 'progress')
+        if(!length) {
+            setResults(1/10)
+            return
+        };
+        setProgress((activeSlide - 1) / length);
+    }, [activeSlide]);
 
     const submitQuiz = () => {
         data.data.forEach((question: IQuestion) => {
@@ -118,7 +131,12 @@ const Question: React.FC<QuestionProps> = ({module}) => {
             </div>
             <div>
                 <h1>{module.attributes.name}</h1>
-                {isLoading && <p>Loading...</p>}
+                {isLoading && (
+                    <IonProgressBar type="indeterminate"></IonProgressBar>
+                )}
+                {data && (
+                    <IonProgressBar value={progress}></IonProgressBar>
+                )}
                 {data && data.data.map((question: IQuestion, i: number) => (
                     <QuestionItem setResults={setResults} hint={question.attributes.hint} setSelection={setSelection} submitQuiz={submitQuiz}
                                   maxLength={data.data.length} setActive={setActiveSlide} activeSlide={activeSlide}

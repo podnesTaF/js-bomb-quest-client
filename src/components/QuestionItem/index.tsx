@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import styles from './QuestionItem.module.css'
-import {IonButton, IonIcon, useIonAlert} from "@ionic/react";
+import {IonButton, IonIcon, IonItem, IonLabel, IonSpinner, useIonAlert} from "@ionic/react";
 import {informationCircleOutline} from 'ionicons/icons';
 import axios from "axios";
 import SingleAnswer from "../SingleAnswer";
@@ -80,7 +80,9 @@ const QuestionItem: React.FC<QuestionItemProps> = ({setResults ,maxLength,active
                     {snippet}
                 </SyntaxHighlighter>}
                 <div className={styles.answers}>
-                    {isLoading && <div>Loading...</div>}
+                    {isLoading && <IonItem>
+                        <IonSpinner name="crescent"></IonSpinner>
+                    </IonItem>}
                     {error && <div>Error</div>}
                     {data && (
                        <>
