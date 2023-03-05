@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import {docco} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import styles from './QuestionItem.module.css'
 import {IonButton, IonIcon, IonItem, IonSpinner, useIonAlert} from "@ionic/react";
-import {helpCircle, informationCircleOutline, personCircle} from 'ionicons/icons';
+import {helpCircle} from 'ionicons/icons';
 import SingleAnswer from "../SingleAnswer";
 import MultipleAnswer from "../MultipleAnswer";
 import Order from "../Order";
@@ -11,6 +11,7 @@ import OwnAnswer from "../OwnAnswer";
 import {useFetchAnswersQuery} from "../../services/AnswerService";
 import clsx from "clsx";
 import DragSection from "../DragSection";
+import {defineOutOf} from "../../utils/count";
 
 
 interface QuestionItemProps {
@@ -27,7 +28,7 @@ interface QuestionItemProps {
     answer?: any;
     correctAnswer?: any;
     hint: string;
-    isCorrect?: boolean
+    points?: number;
     boxes?: string[]
     questionIdx: number
     setResults?: Function
@@ -48,13 +49,14 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
                                                        answer,
                                                        correctAnswer,
                                                        hint,
-                                                       isCorrect,
+                                                       points,
                                                        boxes,
                                                        questionIdx
                                                    }) => {
 
 
     const [hintAlert] = useIonAlert();
+    const [status, setStatus] = useState<string>('4EB1BA')
     const {data, error, isLoading} = useFetchAnswersQuery(id);
 
     const next = () => {
@@ -80,11 +82,33 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
         buttons: [{text: 'Thanks!', cssClass: 'hint-alert-button'}]
     })
 
+    const defineClass = () => {
+            if(isFinished && data) {
+                const percentage = points! / defineOutOf(data.data, type);
+                if (percentage === 1) {
+                    setStatus('#2dd36f')
+                } else if (percentage > 0) {
+                    setStatus('orange')
+                } else {
+                    setStatus('#eb445a')
+                }
+            }
+        }
+
+    useEffect(() => {
+        defineClass();
+    }, [isFinished, points, data])
+
+
+
     return (
         <div className={styles.wrapper} style={{display: activeSlide === questionIdx || isFinished ? "block" : "none"}}>
-            <h2>Question {`${questionIdx}/${maxLength}`}</h2>
-            <div className={clsx(styles.content, isFinished && isCorrect ? styles.success : styles.error)}>
-                <div className={clsx(styles.header, isFinished ? isCorrect ? styles.success : styles.error : '')}>
+            <div className={styles.heading}>
+                <h2>Question {`${questionIdx}/${maxLength}`}</h2>
+                {data && isFinished && <h2 className={styles.points}>{points} / {defineOutOf(data.data, type)}</h2>}
+            </div>
+            <div className={clsx(styles.content, status)}>
+                <div style={{backgroundColor: status}} className={clsx(styles.header, status)}>
                     <h1>{title}</h1>
                     <div className={styles.hint}>
                         <IonButton onClick={alertHint} color={'light'} fill={'clear'}>

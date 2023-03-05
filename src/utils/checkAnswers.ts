@@ -1,27 +1,39 @@
 import {IAnswer} from "../models/IAnswer";
 import {DraggableAnswer} from "../models/Results";
-import multipleAnswer from "../components/MultipleAnswer";
 
-export const checkSingleAnswer = (chosenAnswer?: IAnswer) => {
-    return chosenAnswer?.attributes.isCorrect;
+export const countSingleAnswerPoints = (chosenAnswer?: IAnswer) => {
+    return chosenAnswer?.attributes.isCorrect ? 1 : 0;
 }
 
-export const checkMultipleAnswers = (chosenAnswers?: IAnswer[]) => {
-    if(chosenAnswers?.length === 0) return false;
-    return chosenAnswers?.every(answer => answer.attributes.isCorrect);
-}
-
-export const checkOwnAnswer = (correctAnswer: string, ownAnswer?: string) => {
-    return ownAnswer === correctAnswer;
-}
-
-export const checkOrder = (chosenAnswers?: IAnswer[]) => {
-    return chosenAnswers?.every((answer, index) => answer.attributes.position === index);
-}
-
-export const checkDraggable = (emptyBoxes: string[], chosenAnswers?: DraggableAnswer[]) => {
-   return chosenAnswers?.every((box, index) => {
-       if(box.answers.length === 0 && !emptyBoxes.includes(box.name)) return false;
-        return box.answers.every((answer, index) => answer.attributes.box === box.name)
+export const countMultiplePoints = (chosenAnswers?: IAnswer[]) => {
+    let points = 0;
+    chosenAnswers?.forEach(answer => {
+        if(answer.attributes.isCorrect) {
+            points += 1;
+        }
     })
+    return points;
+}
+
+export const countOwnAnswerPoints = (correctAnswer: string, ownAnswer?: string) => {
+    return ownAnswer === correctAnswer ? 1 : 0;
+}
+
+export const countOrderPoints = (chosenAnswers?: IAnswer[]) => {
+    let count = 0;
+    chosenAnswers?.forEach((answer, index) => {
+        if(answer.attributes.position === index) {
+            count += 1;
+        }
+    });
+    return count
+}
+
+export const countDraggablePoints = (emptyBoxes: string[], chosenAnswers?: DraggableAnswer[]) => {
+   let count = 0;
+   chosenAnswers?.forEach((box, index) => {
+        count += box.answers.filter((answer, index) => answer.attributes.box === box.name).length
+    })
+
+    return count;
 }

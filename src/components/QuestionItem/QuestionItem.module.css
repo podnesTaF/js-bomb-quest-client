@@ -35,8 +35,13 @@
     color: white;
 }
 
-.header.error {
+.header.partial {
     background-color: #FFA500;
+    color: white;
+}
+
+.header.fail {
+    background-color: #eb445a;
     color: white;
 }
 
@@ -69,6 +74,13 @@
 
 .incorrect {
     border: 1px solid red;
+}
+
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-right: 20px;
 }
 
 @media screen and (max-width: 400px) {

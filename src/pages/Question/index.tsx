@@ -1,29 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import Breadcrumb from "../../components/Breadcrumb";
 import QuestionItem from "../../components/QuestionItem";
 import {IQuestion} from "../../models/IQuestion";
-import {
-    checkDraggable,
-    checkMultipleAnswers,
-    checkOrder,
-    checkOwnAnswer,
-    checkSingleAnswer
-} from "../../utils/checkAnswers";
 import {useHistory} from "react-router";
 import {useFetchQuestionsQuery} from "../../services/QuestionService";
 import {IModule} from "../../models/IModule";
-import {IAnswer} from "../../models/IAnswer";
-import {getCorrectAnswer} from "../../utils/getAnswer";
 import {IonProgressBar} from "@ionic/react";
 
 import './Question.css'
+import {addAnswers} from "../../utils/addAnswers";
+
 interface QuestionProps {
     module: IModule;
 }
 
 const Question: React.FC<QuestionProps> = ({module}) => {
-    // const [questions, setQuestions] = useState<any>(null);
     const [activeSlide, setActiveSlide] = useState<number>(1);
     const [selection, setSelection] = useState<any>({})
     const [results, setResults] = useState<any>({});
@@ -35,7 +26,6 @@ const Question: React.FC<QuestionProps> = ({module}) => {
 
     useEffect(() => {
         const length = data?.data.length;
-        console.log(length, 'progress')
         if(!length) {
             setResults(1/10)
             return
@@ -48,69 +38,11 @@ const Question: React.FC<QuestionProps> = ({module}) => {
             if (!selection[question.id]) {
                 setResults((prev: any) => ({
                     ...prev,
-                    [question.id] :{answer: null, correct: false}
+                    [question.id] :{answer: null, points: 0}
                 }))
                 return;
             }
-            switch (question.attributes.type) {
-                case 'single':
-                    if (question.attributes.answers.data.length === 1) {
-                        setResults((prev: any) => ({
-                            ...prev,
-                            [question.id]:{
-                            answer: selection[question.id],
-                                correct: checkOwnAnswer(selection[question.id], question.attributes.answers.data[0].attributes.text)
-                        }
-                        }))
-                    } else {
-                        const selected = question.attributes.answers.data.filter((answer: any) => selection[question.id] === answer.id)[0];
-                        setResults((prev: any[]) => ({
-                            ...prev, [question.id]: {
-                                answer: selection[question.id],
-                                    correct: checkSingleAnswer(selected)
-                            }
-                        }))
-                    }
-                    break;
-                case 'multiple':
-                    const selected = question.attributes.answers.data.filter((answer: any) => selection[question.id].includes(answer.id));
-                    setResults((prev: any[]) => ({
-                        ...prev,
-                            [question.id]: {
-                            answer: selection[question.id],
-                            correct: checkMultipleAnswers(selected)
-                            },
-                    }))
-                    break;
-                case 'order':
-                    let answer: IAnswer[];
-                    if (selection[question.id] && selection[question.id].length > 0) {
-                        answer = selection[question.id];
-                    } else {
-                        answer = question.attributes.answers.data
-                    }
-                    const structuredAnswer = {
-                        answer,
-                        correct: checkOrder(selection[question.id])
-                    }
-                    setResults((prev: any[]) => ({
-                        ...prev, [question.id]: structuredAnswer
-                    }))
-                    break;
-                case 'dragable':
-                    let emptyBoxes = getCorrectAnswer(question) as any[];
-                    emptyBoxes = emptyBoxes.filter((box: any) => box.answers.length === 0).map((box: any) => box.name);
-                    console.log('emptyBoxes2', emptyBoxes)
-                    const selectedAnswers = {
-                        answer: selection[question.id],
-                        correct: checkDraggable(emptyBoxes, selection[question.id])
-                    }
-                    setResults((prev: any[]) => ({
-                        ...prev,
-                        [question.id]: selectedAnswers
-                    }))
-                    break;
-            }
+            addAnswers(question, selection, setResults)
         })
     }
 
