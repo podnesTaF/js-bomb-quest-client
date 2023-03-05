@@ -36,7 +36,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({module}) => {
                 </div>
                 {isLoading &&  <IonProgressBar type="indeterminate"></IonProgressBar>}
                 <div className='questions'>
-                    {Object.keys(results).length > 0 && data?.data.map((question: IQuestion, i: number) => (
+                    {Object.keys(results).length > 0
+                        && data?.data.map((question: IQuestion, i: number) => (
                         <QuestionItem hint={question.attributes.hint} maxLength={data.data.length} key={question.id}
                                       id={question.id} title={question.attributes.title} type={question.attributes.type}
                                       snippet={question.attributes.snippet} isFinished={true} answer={results[question.id].answer}

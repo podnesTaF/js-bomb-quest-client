@@ -17,7 +17,29 @@ interface DragBoxesProps {
 
 }
 
-const DragBox: React.FC<DragBoxesProps> = ({box, handleDragOver, handleDrop, handleAnswerClick, yourAnswer, answers, isResult}) => {
+const DragBox: React.FC<DragBoxesProps> = ({
+                                               box,
+                                               handleDragOver,
+                                               handleDrop,
+                                               handleAnswerClick,
+                                               yourAnswer,
+                                               answers,
+                                               isResult
+                                           }) => {
+
+    const defineClass = (styles: any) => {
+        if(isResult) {
+            return styles.correct
+        }
+        if (yourAnswer && answers?.some(answer => answer.attributes.box === box.name)) {
+            return styles.correct
+        }
+        if (yourAnswer) {
+            return styles.wrong
+        }
+        return ''
+    }
+
     return (
         <div className={styles.box} key={box.id}>
             <IonCardHeader>
@@ -25,7 +47,7 @@ const DragBox: React.FC<DragBoxesProps> = ({box, handleDragOver, handleDrop, han
             </IonCardHeader>
             <div onDragOver={handleDragOver}
                  onDrop={e => handleDrop(e, box)}
-                 className={clsx(styles.area, box.answers.length > 0 && styles.fit, yourAnswer && answers?.some(answer => answer.attributes.box === box.name) ? styles.correct : yourAnswer ? styles.wrong : '', isResult && styles.correct)}>
+                 className={clsx(styles.area, box.answers.length > 0 && styles.fit, defineClass(styles))}>
                 {box.answers.length > 0
                     ? box.answers.map((answer: IAnswer) => (
                         <DragAnswer

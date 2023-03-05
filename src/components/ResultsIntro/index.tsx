@@ -8,6 +8,9 @@ interface ResultIntroProps {
 }
 
 const ResultsIntro: React.FC<ResultIntroProps> = ({sectionName, percentage}) => {
+    const styleObj = {
+        background: `linear-gradient(to right, white ${percentage}%, transparent 0) content-box`
+    }
 
     return (
         <div className={styles.intro}>
@@ -27,7 +30,7 @@ const ResultsIntro: React.FC<ResultIntroProps> = ({sectionName, percentage}) => 
                     </p>
                 </div>
                 <div className={styles.wrapper}>
-                    <div style={{background: `linear-gradient(to right, white ${percentage}%, transparent 0) content-box`}}
+                    <div style={styleObj}
                          className={styles.circle}>
                         <IonText color="dark">
                             <h2>{percentage}%</h2>

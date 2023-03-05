@@ -17,7 +17,7 @@ const ModuleItem: React.FC<ModuleItemProps> = ({module}) => {
             <div className={styles.header}>
                 <div className={styles.title}>
                     <h3>{module.attributes.name}</h3>
-                    <h4>Complexity</h4>
+                    <h4>Difficulty</h4>
                 </div>
                 <div className={styles.btns}>
                     {isFinished && <NavLink to={'/modules/' + module.id + '/results'}>
