@@ -8,14 +8,16 @@ Idea:
 - typescript
 - promises
 3) each module has 10 - 12 different questions with several type of introduction the problem
-- just question and answer
+- Multiple answers one correct
+- Multiple answers several correct
 - drag and drop (event loop, etc)
-- code and multiple quest
-- write the result one by one (event loop)
-- etc.
-4) Hints after wrong question, explaining right one; and little hint clicking on the i icon in the right top corner
-5) congradulation component after finish test with analyze of answers and correct one, if guy didn't answer more than 50% of quest, make him redo, if it isn't the case, go on the main page with modules, unlock next module.
-6) After levels finished bomb explode with a message: "It's crime to know js so good".
+- reorder elements in correct order
+- own answer
+4) Hints after wrong question, explaining right one; and little hint clicking on the "?" icon in the right top corner
+5) congratulation component after finish test with analyze of answers and correct one, if guy didn't answer more than 50% of quest, make him redo, if it isn't the case, go on the main page with modules, unlock next module. 
+6) ### User Auth:
+- Authorized user can be an author of a module;
+- User can see history and statistic of results on his profile page;
 
 side notes:
 
@@ -30,17 +32,14 @@ side notes:
 Entities (mvp):
 1) Modules,
 2) Questions,
-3) Answers,
-4) Hints,
+3) Answers
 
 Entities (expanded):
 1) Modules,
 2) Questions,
 3) Answers,
-4) Hints,
-5) Users
-6) comments
-7) recommendations
+5) Users / Authors
+6) Results
 
 Tools:
 1) React
@@ -50,5 +49,4 @@ Tools:
 5) scss
 
 backend:
-1) nextJs
-2) postgreSql"# js-bomb-task" 
+1) Strapi

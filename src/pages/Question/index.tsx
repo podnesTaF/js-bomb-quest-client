@@ -34,7 +34,6 @@ const Question: React.FC<QuestionProps> = ({module}) => {
     const history = useHistory();
 
     useEffect(() => {
-        // if ()
         const length = data?.data.length;
         console.log(length, 'progress')
         if(!length) {
